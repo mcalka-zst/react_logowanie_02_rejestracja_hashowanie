@@ -1,5 +1,6 @@
 import { useState} from "react";
 import { Link } from "react-router-dom";
+// import bcrypt from 'bcryptjs';
 
 const LoginForm = ({ onLogin }) => {
     const [error, setError] = useState('')
@@ -10,6 +11,7 @@ const LoginForm = ({ onLogin }) => {
         e.preventDefault();
         // Wysyłamy zapytanie do bazy danych, aby sprawdzić istnienie użytkownika i pobrać imię i nazwisko
         try {
+            // const hashedPass = await bcrypt.hash(password, 10); //10 koszt hashowania
             const response = await fetch('http://localhost:8081/login',
                 {
                     method: 'POST',
@@ -22,7 +24,7 @@ const LoginForm = ({ onLogin }) => {
                 const res = await response.json();
                 console.log(res); 
                 if(res.success){
-                    onLogin({ name: res.data[0].name, surname: res.data[0].surname })              
+                    onLogin({ name: res.name, surname: res.surname })              
                 }
                 else{
                     setError(res.message);
@@ -38,11 +40,11 @@ const LoginForm = ({ onLogin }) => {
         <form onSubmit={handleSubmit}>
             <label>
                 Login:<br />
-                <input type="text" value={user} onChange={(e) => setUser(e.target.value)} id="name" name="name" autoComplete="on" placeholder="Login"/><br />
+                <input type="text" value={user} onChange={(e) => setUser(e.target.value)} id="user" name="user" autoComplete="on" placeholder="Login"/><br />
             </label>
             <label>
                 Hasło:<br />
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}  id="surname" name="surname" autoComplete="on" placeholder="Hasło"/> <br /> <br />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}  id="password" name="password" autoComplete="on" placeholder="Hasło"/> <br /> <br />
             </label>
             <button type="submit">Zaloguj</button>
             
