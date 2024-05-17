@@ -12,8 +12,8 @@ const check = async (p1, p2) => {
   await compare(p2, h2);
 };
 
-const compare = async (p1, h2) => {
-  if (await bcrypt.compare(p2, h2)) console.log("Hasła są zgodne");
+const compare = async (p, h) => {
+  if (await bcrypt.compare(p, h)) console.log("Hasła są zgodne");
   else console.log("Hasła nie są zgodne");
 };
 
